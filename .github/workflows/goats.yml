@@ -1,0 +1,35 @@
+name: Game API Automation
+
+on:
+  release:
+    branches:
+      - master
+      - main
+
+jobs:
+  api_catch:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      # Step 1: Make a POST request to start a new game with JSON payload and Authorization header
+      - name: Start new game
+        id: new-game
+        run: |
+          response=$(curl -s -X POST https://api-catching.goatsbot.xyz/catching/new-game \
+            -H "Authorization: Bearer ${{ secrets.GOATS_API_TOKEN }}" \
+            -H "Content-Type: application/json" \
+            -d '{"location": 13, "bomb": 1, "bet_amount": 2131}')
+          echo "$response"
+          game_id=$(echo "$response" | jq -r '.stateGame._id')
+          echo "Game ID: $game_id"
+          echo "::set-output name=game_id::$game_id"
+
+      # Step 2: Cash out with game ID using POST method and Authorization header
+      - name: Cash out with game ID
+        run: |
+          game_id="${{ steps.new-game.outputs.game_id }}"
+          curl -X POST "https://api-catching.goatsbot.xyz/catching/cashout/$game_id" \
+            -H "Authorization: Bearer ${{ secrets.GOATS_API_TOKEN }}" \
+            -H "Content-Type: application/json"

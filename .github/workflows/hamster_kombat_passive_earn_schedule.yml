@@ -6,7 +6,7 @@ jobs:
   refresh-feed:
     runs-on: ubuntu-latest
     steps:
-      - name: Fetch API Data 📦
+      - name: Fetch API Data 📦 huhi
         uses: JamesIves/fetch-api-data-action@v2
         with:
           endpoint: https://api.hamsterkombatgame.io/interlude/sync

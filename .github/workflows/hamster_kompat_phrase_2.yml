@@ -1,0 +1,13 @@
+name: Hamster Kombat passive earn schedule
+on: 
+  schedule:
+    - cron: '0 */2 * * *'
+jobs:
+  refresh-feed:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Fetch API Data 📦 huhihe
+        uses: JamesIves/fetch-api-data-action@v2
+        with:
+          endpoint: https://api.hamsterkombatgame.io/season2/command
+          configuration: '{ "method": "POST", "body":{"command": {"type": "ClaimReleasedGamesRewards"}} "headers": {"Authorization": "Bearer ${{ secrets.HAMSTER_TOKEN }}"} }'

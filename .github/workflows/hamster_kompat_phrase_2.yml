@@ -1,7 +1,14 @@
 name: Hamster Kombat passive earn schedule phrase 2
 on: 
+  
   schedule:
     - cron: '0 */2 * * *'
+  workflow_dispatch:
+    inputs:
+      example_input:
+        description: 'Nhập thông tin (tùy chọn)'
+        required: false
+        default: 'Default value'
 # jobs:
 #   refresh-feed:
 #     runs-on: ubuntu-latest

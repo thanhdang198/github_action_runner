@@ -1,4 +1,4 @@
-name: Hamster Kombat passive earn schedule
+name: Hamster Kombat passive earn schedule phrase 2
 on: 
   schedule:
     - cron: '0 */2 * * *'

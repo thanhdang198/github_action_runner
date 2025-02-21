@@ -2,12 +2,34 @@ name: Hamster Kombat passive earn schedule phrase 2
 on: 
   schedule:
     - cron: '0 */2 * * *'
+# jobs:
+#   refresh-feed:
+#     runs-on: ubuntu-latest
+#     steps:
+#       - name: Fetch API Data 📦 huhihe
+#         uses: JamesIves/fetch-api-data-action@v2
+#         with:
+#           endpoint: https://api.hamsterkombatgame.io/season2/command
+          # configuration: '{ "method": "POST", "body":{"command": {"type": "ClaimReleasedGamesRewards"}}, "headers": {"Authorization": "Bearer ${{ secrets.HAMSTER_TOKEN }}"} }'
+#=========================================
+
 jobs:
-  refresh-feed:
+  api_catch:
     runs-on: ubuntu-latest
     steps:
-      - name: Fetch API Data 📦 huhihe
-        uses: JamesIves/fetch-api-data-action@v2
-        with:
-          endpoint: https://api.hamsterkombatgame.io/season2/command
-          configuration: '{ "method": "POST", "body":{"command": {"type": "ClaimReleasedGamesRewards"}}, "headers": {"Authorization": "Bearer ${{ secrets.HAMSTER_TOKEN }}"} }'
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      # Step 1: Make a POST request to start a new game with JSON payload and Authorization header
+      - name: Start new game
+        id: new-game
+        run: |
+          response=$(curl --location 'https://api.hamsterkombatgame.io/season2/command' \
+              --header 'Authorization: Bearer ${{ secrets.HAMSTER_TOKEN }}' \
+              --header 'Content-Type: application/json' \
+              --data '{
+                "command": {
+                  "type": "ClaimReleasedGamesRewards"
+                }
+              }')
+          echo "$response"

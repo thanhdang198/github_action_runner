@@ -10,4 +10,4 @@ jobs:
         uses: JamesIves/fetch-api-data-action@v2
         with:
           endpoint: https://api.hamsterkombatgame.io/season2/command
-          configuration: '{ "method": "POST", "body":{"command": {"type": "ClaimReleasedGamesRewards"}} "headers": {"Authorization": "Bearer ${{ secrets.HAMSTER_TOKEN }}"} }'
+          configuration: '{ "method": "POST", "body":{"command": {"type": "ClaimReleasedGamesRewards"}}, "headers": {"Authorization": "Bearer ${{ secrets.HAMSTER_TOKEN }}"} }'

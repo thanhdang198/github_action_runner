@@ -28,6 +28,17 @@ jobs:
         uses: actions/checkout@v3
 
       # Step 1: Make a POST request to start a new game with JSON payload and Authorization header
+      - name: Claim Rewards
+        id: claim-rewards
+        run: |
+          response=$(curl --location 'https://api.hamsterkombatgame.io/season2/command' \
+              --header 'Authorization: Bearer ${{ secrets.HAMSTER_TOKEN }}' \
+              --header 'Content-Type: application/json' \
+              --data '{
+                "command": {
+                  "type": "ClaimReleasedGamesRewards"
+                }
+              }')
       - name: Start new game
         id: new-game
         run: |
